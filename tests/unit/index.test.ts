@@ -1,7 +1,7 @@
 import { beforeEach, describe, expect, it } from 'vitest';
-import { YggEuClient } from '../../src/index';
-import { YggCategory } from '../../src/types';
-import { fetchMock } from '../setup.unit';
+import { YggEuClient } from '../../src/index.js';
+import { YggCategory } from '../../src/types.js';
+import { fetchMock } from '../setup.unit.js';
 
 describe('YggEuClient - Tests Unitaires (Mocks)', () => {
   let client: YggEuClient;

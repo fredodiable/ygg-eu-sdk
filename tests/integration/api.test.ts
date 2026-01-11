@@ -1,6 +1,6 @@
 import { describe, expect, it } from 'vitest';
-import { YggEuClient } from '../../src/index';
-import { YggCategory } from '../../src/types';
+import { YggEuClient } from '../../src/index.js';
+import { YggCategory } from '../../src/types.js';
 
 /**
  * Tests d'intégration réels contre l'API yggapi.eu
