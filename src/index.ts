@@ -3,7 +3,7 @@ import {
   SearchParams,
   TorrentDetails,
   TorrentResult,
-} from './types';
+} from './types.js';
 
 export class YggEuClient {
   private readonly baseUrl: string;

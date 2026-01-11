@@ -1,5 +1,5 @@
 import { beforeEach, vi } from 'vitest';
-import './setup.base';
+import './setup.base.js';
 
 export const fetchMock = vi.fn();
 
