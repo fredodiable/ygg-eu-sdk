@@ -87,4 +87,4 @@ writeFileSync('test.torrent', Buffer.from(torrentBuffer));
 
 ## ⚖️ Licence
 
-Ce projet est sous licence **MIT**. Vous êtes libre de l'utiliser, de le modifier et de le distribuer, même à des fins commerciales. Voir le fichier [LICENSE](https://github.com/fredodiable/ygg-eu-sdk/blob/master/LICENSE) pour plus de détails.
+Ce projet est sous licence **MIT**. Vous êtes libre de l'utiliser, de le modifier et de le distribuer, même à des fins commerciales. Voir le fichier [LICENSE](https://github.com/fredodiable/ygg-eu-sdk/blob/main/LICENSE) pour plus de détails.
