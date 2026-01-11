@@ -1,0 +1,55 @@
+{
+  "name": "ygg-eu-sdk",
+  "version": "1.0.0",
+  "description": "SDK TypeScript léger et zéro-dépendance pour yggapi.eu",
+  "main": "./dist/index.js",
+  "module": "./dist/index.mjs",
+  "types": "./dist/index.d.ts",
+  "files": [
+    "dist"
+  ],
+  "scripts": {
+    "build": "tsup",
+    "dev": "tsup --watch",
+    "format": "prettier --check \"{src,tests}/**/*.ts\"",
+    "format:fix": "prettier --write \"{src,tests}/**/*.ts\"",
+    "lint": "eslint \"{src,tests}/**/*.ts\"",
+    "lint:fix": "eslint \"{src,tests}/**/*.ts\" --fix",
+    "test": "vitest run --project=unit",
+    "test:integration": "vitest run --project=integration",
+    "test:all": "vitest run",
+    "prepublishOnly": "npm run format && npm run lint && npm run test && npm run build"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/fredodiable/ygg-eu-sdk.git"
+  },
+  "bugs": {
+    "url": "https://github.com/fredodiable/ygg-eu-sdk/issues"
+  },
+  "homepage": "https://github.com/fredodiable/ygg-eu-sdk#readme",
+  "keywords": [
+    "ygg",
+    "api",
+    "sdk",
+    "typescript",
+    "torrent",
+    "yggapi"
+  ],
+  "author": "fredodiable",
+  "license": "MIT",
+  "engines": {
+    "node": ">=18.0.0"
+  },
+  "devDependencies": {
+    "@types/node": "^20.0.0",
+    "@typescript-eslint/eslint-plugin": "^8.52.0",
+    "@typescript-eslint/parser": "^8.52.0",
+    "eslint": "^9.39.2",
+    "eslint-config-prettier": "^10.1.8",
+    "prettier": "^3.0.0",
+    "tsup": "^8.0.0",
+    "typescript": "^5.0.0",
+    "vitest": "^4.0.16"
+  }
+}
