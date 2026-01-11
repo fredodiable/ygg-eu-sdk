@@ -1,12 +1,13 @@
-name: CD (NPM Publication)
+name: CD (Release & NPM Publication)
 
 on:
-  release:
-    types: [published]
+  push:
+    tags:
+      - 'v*.*.*'
 
 permissions:
   id-token: write
-  contents: read
+  contents: write
 
 jobs:
   publish:
@@ -30,6 +31,15 @@ jobs:
 
       - name: Build SDK
         run: npm run build
+
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          name: ${{ github.ref_name }}
+          tag_name: ${{ github.ref_name }}
+          generate_release_notes: true
+          draft: false
+          prerelease: false
 
       - name: Publish to NPM
         run: npm publish
