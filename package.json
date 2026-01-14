@@ -1,6 +1,6 @@
 {
   "name": "ygg-eu-sdk",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "description": "SDK TypeScript léger et zéro-dépendance pour yggapi.eu",
   "type": "module",
   "main": "./dist/index.cjs",
@@ -30,7 +30,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "https://github.com/fredodiable/ygg-eu-sdk.git"
+    "url": "git+https://github.com/fredodiable/ygg-eu-sdk.git"
   },
   "bugs": {
     "url": "https://github.com/fredodiable/ygg-eu-sdk/issues"
