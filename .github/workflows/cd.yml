@@ -1,4 +1,4 @@
-name: CD (Release & NPM Publication)
+name: CD (NPM Publication & Release)
 
 on:
   push:
@@ -18,7 +18,7 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: '20'
+          node-version: 'lts/*'
 
       - name: Install dependencies
         run: npm ci
