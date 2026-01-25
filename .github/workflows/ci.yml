@@ -31,5 +31,8 @@ jobs:
           npm run lint
           npm test
 
-      - name: Build SDK (Dry Run)
+      - name: Build SDK
         run: npm run build
+
+      - name: Validate Package Structure
+        run: npm run build:check

@@ -12,6 +12,7 @@ Un SDK TypeScript pour l'API non officielle [yggapi.eu](https://yggapi.eu/).
 - 🪶 **Ultra léger** : Empreinte minimale sur votre projet.
 - 🛡️ **Zéro Dépendance** : Utilise l'API `fetch` native.
 - 💪 **Type-Safe** : Développé en TypeScript pour une autocomplétion parfaite.
+- 📦 **Dual Build** : Support complet **ESM** (`import`) et **CommonJS** (`require`).
 - 🧪 **Fiable** : Couverture complète par tests unitaires et d'intégration.
 
 ## 🚀 Installation
