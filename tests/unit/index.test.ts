@@ -1,5 +1,6 @@
-import { beforeEach, describe, expect, it } from 'vitest';
-import { YggEuClient } from '../../src/index.js';
+import { beforeEach, describe, expect, it, vi } from 'vitest';
+import { YggEuClient } from '../../src/client.js';
+import { YggSdkError } from '../../src/errors.js';
 import { YggCategory } from '../../src/types.js';
 import { fetchMock } from '../setup.unit.js';
 
@@ -22,6 +23,7 @@ describe('YggEuClient - Tests Unitaires (Mocks)', () => {
       const results = await client.torrents.search({
         q: 'Inception',
         category_id: YggCategory.VIDEOS_FILM,
+        order_by: undefined,
       });
 
       const [calledUrl] = fetchMock.mock.calls[0];
@@ -32,6 +34,8 @@ describe('YggEuClient - Tests Unitaires (Mocks)', () => {
       expect(url.searchParams.get('category_id')).toBe(
         YggCategory.VIDEOS_FILM.toString()
       );
+
+      expect(url.searchParams.has('order_by')).toBe(false);
 
       expect(results).toHaveLength(1);
     });
@@ -65,7 +69,7 @@ describe('YggEuClient - Tests Unitaires (Mocks)', () => {
         await client.torrents.getDetails(999);
         expect.fail('La méthode aurait dû rejeter');
       } catch (error: unknown) {
-        if (error instanceof Error) {
+        if (error instanceof YggSdkError) {
           expect(error.message).toContain('YggApi 404');
         }
       }
@@ -98,6 +102,23 @@ describe('YggEuClient - Tests Unitaires (Mocks)', () => {
         'Passkey is required for download'
       );
     });
+
+    it('devrait lever une erreur explicite lorsque le téléchargement échoue', async () => {
+      fetchMock.mockResolvedValueOnce({
+        ok: false,
+        status: 404,
+        json: async () => ({ message: 'Torrent not found' }),
+      } as Response);
+
+      try {
+        await client.torrents.download(999);
+        expect.fail('La méthode aurait dû rejeter');
+      } catch (error: unknown) {
+        if (error instanceof YggSdkError) {
+          expect(error.message).toContain('Download failed');
+        }
+      }
+    });
   });
 
   describe('Gestion du Timeout et Erreurs Réseau', () => {
@@ -116,11 +137,71 @@ describe('YggEuClient - Tests Unitaires (Mocks)', () => {
       }
     });
 
+    it("doit déclencher l'annulation de la requête après le délai de timeout", async () => {
+      vi.useFakeTimers();
+
+      fetchMock.mockImplementation((_, options) => {
+        return new Promise((_, reject) => {
+          options?.signal?.addEventListener(
+            'abort',
+            () => {
+              reject(new DOMException('Aborted', 'AbortError'));
+            },
+            { once: true }
+          );
+        });
+      });
+
+      const searchPromise = client.torrents.search({ q: 'test' });
+
+      await Promise.all([
+        vi.advanceTimersByTimeAsync(30000),
+        expect(searchPromise).rejects.toThrow('Request timeout'),
+      ]);
+
+      vi.useRealTimers();
+    });
+
     it('devrait propager les erreurs inconnues proprement', async () => {
       fetchMock.mockRejectedValueOnce(new Error('Network Down'));
       await expect(client.torrents.getDetails(1)).rejects.toThrow(
         'Network Down'
       );
+    });
+
+    it('devrait gérer les rejets qui ne sont pas des instances de Error', async () => {
+      fetchMock.mockRejectedValueOnce('Unhandled error');
+
+      try {
+        await client.torrents.search({ q: 'test' });
+        expect.fail('La méthode aurait dû rejeter');
+      } catch (error: unknown) {
+        if (error instanceof YggSdkError) {
+          expect(error.message).toBe('An unknown error occurred');
+          expect(error.cause?.detail).toEqual({
+            originalError: 'Unhandled error',
+          });
+        }
+      }
+    });
+
+    it("doit renvoyer un objet vide dans 'detail' si le corps de l'erreur n'est pas du JSON valide", async () => {
+      fetchMock.mockResolvedValueOnce({
+        ok: false,
+        status: 500,
+        statusText: 'Internal Server Error',
+        json: () => Promise.reject(new YggSdkError('Unexpected token in JSON')),
+      } as Response);
+
+      try {
+        await client.torrents.search({ q: 'test' });
+        expect.fail('La méthode aurait dû rejeter');
+      } catch (error: unknown) {
+        if (error instanceof YggSdkError) {
+          expect(error.cause?.detail).toEqual({});
+          expect(error.message).toContain('YggApi 500');
+        }
+      }
     });
   });
 });

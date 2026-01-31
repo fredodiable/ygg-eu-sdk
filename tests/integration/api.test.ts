@@ -1,5 +1,5 @@
 import { describe, expect, it } from 'vitest';
-import { YggEuClient } from '../../src/index.js';
+import { YggEuClient } from '../../src/client.js';
 import { YggCategory } from '../../src/types.js';
 
 /**
