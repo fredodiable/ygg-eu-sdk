@@ -29,7 +29,14 @@ jobs:
         run: |
           npm run format
           npm run lint
-          npm test
+
+      - name: Run Tests with Coverage
+        run: npm run test:cov
+
+      - name: Upload coverage to Codecov
+        uses: codecov/codecov-action@v5
+        with:
+          token: ${{ secrets.CODECOV_TOKEN }}
 
       - name: Build SDK
         run: npm run build

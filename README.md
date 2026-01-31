@@ -2,6 +2,7 @@
 
 [![npm version](https://img.shields.io/npm/v/ygg-eu-sdk.svg)](https://www.npmjs.com/package/ygg-eu-sdk)
 [![Build Status](https://github.com/fredodiable/ygg-eu-sdk/actions/workflows/ci.yml/badge.svg)](https://github.com/fredodiable/ygg-eu-sdk/actions)
+[![Coverage Status](https://codecov.io/gh/fredodiable/ygg-eu-sdk/graph/badge.svg)](https://codecov.io/gh/fredodiable/ygg-eu-sdk)
 [![Dependencies](https://img.shields.io/badge/dependencies-0-success)](https://www.npmjs.com/package/ygg-eu-sdk)
 [![License](https://img.shields.io/badge/license-MIT-blue)](LICENSE)
 

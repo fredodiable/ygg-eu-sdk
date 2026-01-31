@@ -32,7 +32,8 @@
     "test": "vitest run --project=unit",
     "test:integration": "vitest run --project=integration",
     "test:all": "vitest run",
-    "prepublishOnly": "npm run format && npm run lint && npm run test && npm run build && npm run build:check",
+    "test:cov": "vitest run --coverage",
+    "prepublishOnly": "npm run format && npm run lint && npm run test:cov && npm run build && npm run build:check",
     "prepare": "husky"
   },
   "repository": {
@@ -62,6 +63,7 @@
     "@types/node": "^20.0.0",
     "@typescript-eslint/eslint-plugin": "^8.52.0",
     "@typescript-eslint/parser": "^8.52.0",
+    "@vitest/coverage-v8": "^4.0.18",
     "eslint": "^9.39.2",
     "eslint-config-prettier": "^10.1.8",
     "eslint-plugin-import": "^2.32.0",
