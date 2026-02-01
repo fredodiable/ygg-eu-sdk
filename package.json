@@ -1,6 +1,6 @@
 {
   "name": "ygg-eu-sdk",
-  "version": "1.0.3",
+  "version": "1.0.4",
   "description": "SDK TypeScript léger et zéro-dépendance pour yggapi.eu",
   "type": "module",
   "main": "./dist/index.cjs",
